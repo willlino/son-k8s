@@ -2,7 +2,7 @@ steps:
   - id: "Rodando main"
     name: 'mirror.gcr.io/library/golang'
     env: ['GO111MODULE=auto']
-    dir: 'src'
+    dir: '/go/src'
     # args: ['go', 'test', '-v']
     args: ['go', 'run', 'main.go']
     # args: ['echo $(ls)']
