@@ -2,13 +2,11 @@ steps:
   - id: "Rodando main"
     name: 'mirror.gcr.io/library/golang'
     env: ['GO111MODULE=auto']
-    dir: './src'
+    dir: 'go/src'
     args: ['go', 'test', '-v']
-    # args: ['go', 'run', 'main.go']
-    # args: ['echo $(ls)']
+    
+  - id: "Rodando docker-compose"
+    name: 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
+    args: ['-f', 'docker-compose', 'up', '-d', '--build']
 
-  # - id: "Rodando docker-compose"
-  #   name: 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
-  #   args: ['-f', 'docker-compose', 'up', '-d', '--build']
-
-# images: ["willlino/son-k8s-go:latest"]
+images: ["willlino/son-k8s-go:latest"]
