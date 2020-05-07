@@ -3,8 +3,8 @@ steps:
     name: 'mirror.gcr.io/library/golang'
     env: ['GO111MODULE=auto']
     dir: '/go/src'
-    # args: ['go', 'test', '-v']
-    args: ['go', 'run', 'main.go']
+    args: ['go', 'test', '-v']
+    # args: ['go', 'run', 'main.go']
     # args: ['echo $(ls)']
 
   # - id: "Rodando docker-compose"
