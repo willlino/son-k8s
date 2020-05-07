@@ -1,5 +1,5 @@
 steps:
-  - id: "Rodando testes"
+  - id: "Rodando main"
     name: 'mirror.gcr.io/library/golang'
     env: ['GO111MODULE=auto']
     dir: 'src'
