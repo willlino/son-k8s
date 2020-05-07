@@ -4,7 +4,7 @@ steps:
     env: ['GO111MODULE=auto']
     dir: 'src'
     # args: ['go', 'test', '-v']
-    args: ['go', 'run', 'main.go']
+    args: ['ls']
 
   # - id: "Rodando docker-compose"
   #   name: 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
