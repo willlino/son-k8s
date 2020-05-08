@@ -10,4 +10,4 @@ steps:
     dir: 'go'
     args: ['-f', 'docker-compose.yaml', 'up', '-d', '--build']
 
-images: ["willlino/son-k8s-go:latest"]
+# images: ["willlino/son-k8s-go:latest"]
