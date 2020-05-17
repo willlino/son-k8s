@@ -13,7 +13,6 @@ steps:
   - id: "Logando no dockerhub"
     name: "gcr.io/cloud-builders/docker"
     args: ["-c", "docker login --username=willlino --password-stdin < decrypted-data.txt"]
-    secretEnv: ["dockerhub-password"]
     
   - id: "Rodando docker-compose"
     name: 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
