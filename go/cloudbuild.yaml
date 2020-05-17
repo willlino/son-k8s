@@ -4,10 +4,20 @@ steps:
     env: ['GO111MODULE=auto']
     dir: 'go/src'
     args: ['go', 'test', '-v']
+  
+  - id: "Acessando secret" 
+    name: gcr.io/cloud-builders/gcloud
+    entrypoint: bash
+    args: [ '-c', 'gcloud secrets versions access latest --secret=dockerhub-password > decrypted-data.txt' ]
+
+  - id: "Logando no dockerhub"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["-c", "docker login --username=willlino --password-stdin < decrypted-data.txt"]
+    secretEnv: ["dockerhub-password"]
     
   - id: "Rodando docker-compose"
     name: 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
     dir: 'go'
     args: ['-f', 'docker-compose.yaml', 'up', '-d', '--build']
-
-# images: ["willlino/son-k8s-go:latest"]
+  
+images: ["willlino/son-k8s-go:latest"]
