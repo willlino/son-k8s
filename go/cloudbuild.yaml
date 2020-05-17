@@ -1,18 +1,23 @@
 steps:
+  - id: 'Logando no docker'
+    name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args: ['-c', 'docker login --username=user-name --password=$$PASSWORD']
+    secretEnv: ['PASSWORD']
+ 
+  - id: 'Subir imagem para o dockerhub'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'user-name/myubuntu']
+ secrets:
+ - kmsKeyName: projects/project-id/locations/global/keyRings/keyring-name/cryptoKeys/key-name
+   secretEnv:
+     PASSWORD: 'encrypted-password'
+
   - id: "Rodando testes"
     name: 'mirror.gcr.io/library/golang'
     env: ['GO111MODULE=auto']
     dir: 'go/src'
     args: ['go', 'test', '-v']
-  
-  - id: "Acessando secret" 
-    name: gcr.io/cloud-builders/gcloud
-    entrypoint: bash
-    args: [ '-c', 'gcloud secrets versions access latest --secret=dockerhub-password > decrypted-data.txt' ]
-
-  - id: "Logando no dockerhub"
-    name: "gcr.io/cloud-builders/docker"
-    args: ["-c", "docker login --username=willlino --password-stdin < decrypted-data.txt"]
     
   - id: "Rodando docker-compose"
     name: 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
