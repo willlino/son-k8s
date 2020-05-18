@@ -25,5 +25,4 @@ images: ["willlino/son-k8s-go:latest"]
 secrets:
   - kmsKeyName: projects/gout-273114/locations/global/keyRings/dockerhub-password/cryptoKeys/dockerhub-password
     secretEnv:
-      PASSWORD: 'CiQAneJzlu6a7izWpXPbCOd2mLmQLFr2B12hnVCG0OHf0Cy933USMwCHdWDvJqtrBAuC49mRtzkh
-                 SH2JrH9oSeGM+GcTGOJC/zD2xtNZ5zDSvVybVcoRTsCCDg=='
+      PASSWORD: CiQAneJzlu6a7izWpXPbCOd2mLmQLFr2B12hnVCG0OHf0Cy933USMwCHdWDvJqtrBAuC49mRtzkhSH2JrH9oSeGM+GcTGOJC/zD2xtNZ5zDSvVybVcoRTsCCDg==
