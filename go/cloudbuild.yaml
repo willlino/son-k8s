@@ -7,7 +7,7 @@ steps:
  
   - id: 'Subir imagem para o dockerhub'
     name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'son-k8s-go:latest']
+    args: ['push', 'willlino/son-k8s-go:latest']
   
   - id: "Rodando testes"
     name: 'mirror.gcr.io/library/golang'
