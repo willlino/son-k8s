@@ -1,14 +1,4 @@
 steps:
-  - id: 'Logando no docker'
-    name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args: ['-c', 'docker login --username=willlino --password=$$PASSWORD']
-    secretEnv: ['PASSWORD']
- 
-  - id: 'Subir imagem para o dockerhub'
-    name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'willlino/son-k8s-go:latest']
-  
   - id: "Rodando testes"
     name: 'mirror.gcr.io/library/golang'
     env: ['GO111MODULE=auto']
@@ -19,6 +9,16 @@ steps:
     name: 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
     dir: 'go'
     args: ['-f', 'docker-compose.yaml', 'up', '-d', '--build']
+
+  - id: 'Logando no docker'
+    name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args: ['-c', 'docker login --username=willlino --password=$$PASSWORD']
+    secretEnv: ['PASSWORD']  
+
+  - id: 'Subir imagem para o dockerhub'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'willlino/son-k8s-go:latest']
   
 images: ["willlino/son-k8s-go:latest"]
 
