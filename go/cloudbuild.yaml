@@ -2,7 +2,7 @@ steps:
   - id: 'Logando no docker'
     name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
-    args: ['-c', 'docker login --username=user-name --password=$$PASSWORD']
+    args: ['-c', 'docker login --username=willlino --password=$$PASSWORD']
     secretEnv: ['PASSWORD']
  
   - id: 'Subir imagem para o dockerhub'
