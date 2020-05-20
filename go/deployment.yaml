@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: go-app
-        image: willlino/son-k8s-go 
+        image: willlino/son-k8s-go:latest
       
         resources:
           requests:
