@@ -5,6 +5,4 @@ services:
     image: willlino/son-k8s-go
     build: .
     container_name: go-app
-    # ports:
-    #   - "80:6800"
     
