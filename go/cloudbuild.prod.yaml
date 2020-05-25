@@ -4,11 +4,22 @@ steps:
     env: ['GO111MODULE=auto']
     dir: 'go/src'
     args: ['go', 'test', '-v']
+  
+  - id: "Ajustando tag do docker-compose - k8s"
+    name: 'gcr.io/cloud-builders/gcloud'
+    dir: 'go'
+    entrypoint: '/bin/sh'
+    args:
+      - '-c'
+      - |
+        sed 's#willlino/son-k8s-go#willlino/son-k8s-go:$SHORT_SHA#g' ./docker-compose.yaml > ./docker-compose-new.yaml;
+        cat ./k8s/app/docker-compose-new.yaml;
+  
     
   - id: "Rodando docker-compose"
     name: 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
     dir: 'go'
-    args: ['-f', 'docker-compose.yaml', 'up', '-d', '--build']
+    args: ['-f', 'docker-compose-new.yaml', 'up', '-d', '--build']
 
   - id: 'Logando no docker'
     name: 'gcr.io/cloud-builders/docker'
@@ -27,7 +38,7 @@ steps:
     args:
       - '-c'
       - |
-        sed 's#img-app-deployment#willlino/son-k8s-go:latest:$SHORT_SHA#g' ./deployment.yaml > ./deployment-new.yaml;
+        sed 's#willlino/son-k8s-go#willlino/son-k8s-go:$SHORT_SHA#g' ./deployment.yaml > ./deployment-new.yaml;
         cat ./k8s/app/deployment-new.yaml;
   
   - id: "Deploying k8s"
