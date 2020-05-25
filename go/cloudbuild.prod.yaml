@@ -39,7 +39,7 @@ steps:
       - '-c'
       - |
         sed 's#willlino/son-k8s-go#willlino/son-k8s-go:$SHORT_SHA#g' ./deployment.yaml > ./deployment-new.yaml;
-        cat ./k8s/app/deployment-new.yaml;
+        cat ./deployment-new.yaml;
   
   - id: "Deploying k8s"
     name: 'gcr.io/cloud-builders/kubectl'
