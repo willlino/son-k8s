@@ -13,7 +13,7 @@ steps:
       - '-c'
       - |
         sed 's#willlino/son-k8s-go#willlino/son-k8s-go:$SHORT_SHA#g' ./docker-compose.yaml > ./docker-compose-new.yaml;
-        cat ./k8s/app/docker-compose-new.yaml;
+        cat ./docker-compose-new.yaml;
   
     
   - id: "Rodando docker-compose"
