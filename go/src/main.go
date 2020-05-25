@@ -22,4 +22,3 @@ func greeting(message string) string {
 
 	return htmlBoldMessage;
 }
-
