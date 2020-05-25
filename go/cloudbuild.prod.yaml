@@ -1,0 +1,49 @@
+steps:
+  - id: "Rodando testes"
+    name: 'mirror.gcr.io/library/golang'
+    env: ['GO111MODULE=auto']
+    dir: 'go/src'
+    args: ['go', 'test', '-v']
+    
+  - id: "Rodando docker-compose"
+    name: 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
+    dir: 'go'
+    args: ['-f', 'docker-compose.yaml', 'up', '-d', '--build']
+
+  - id: 'Logando no docker'
+    name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args: ['-c', 'docker login --username=willlino --password=$$PASSWORD']
+    secretEnv: ['PASSWORD']  
+
+  - id: 'Subir imagem para o dockerhub'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'willlino/son-k8s-go:$SHORT_SHA']
+  
+  - id: "Adjusting deployment file - k8s"
+    name: 'gcr.io/cloud-builders/gcloud'
+    dir: 'go'
+    entrypoint: '/bin/sh'
+    args:
+      - '-c'
+      - |
+        sed 's#img-app-deployment#willlino/son-k8s-go:latest:$SHORT_SHA#g' ./deployment.yaml > ./deployment-new.yaml;
+        cat ./k8s/app/deployment-new.yaml;
+  
+  - id: "Deploying k8s"
+    name: 'gcr.io/cloud-builders/kubectl'
+    dir: 'go'
+    args:
+      - 'apply'
+      - '-f'
+      - './deployment-new.yaml'
+    env:
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=son-k8s-cluster'
+
+images: ["willlino/son-k8s-go:$SHORT_SHA"]
+
+secrets:
+  - kmsKeyName: projects/gout-273114/locations/global/keyRings/dockerhub-password/cryptoKeys/dockerhub-password
+    secretEnv:
+      PASSWORD: CiQAneJzlu6a7izWpXPbCOd2mLmQLFr2B12hnVCG0OHf0Cy933USMwCHdWDvJqtrBAuC49mRtzkhSH2JrH9oSeGM+GcTGOJC/zD2xtNZ5zDSvVybVcoRTsCCDg==
