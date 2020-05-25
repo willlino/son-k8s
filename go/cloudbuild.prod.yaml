@@ -49,7 +49,7 @@ steps:
       - '-f'
       - './deployment-new.yaml'
     env:
-    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c' 
     - 'CLOUDSDK_CONTAINER_CLUSTER=son-k8s-cluster'
 
 images: ["willlino/son-k8s-go:$SHORT_SHA"]
